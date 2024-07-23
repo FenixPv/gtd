@@ -3,21 +3,80 @@
 {% block title %}Register{% endblock %}
 
 {% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
+
+  <main class="vh-100 d-flex justify-content-center align-items-center bg-light-subtle p-5">
+    <div class="shadow-lg px-5" style="width: 400px; max-width: 75%;">
+      <h1 class="h3 my-5 font-weight-normal text-center">Регистрация</h1>
+
+      {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+      {% endfor %}
 
-    <h1>Register</h1>
+      {{ form_errors(registrationForm) }}
 
-    {{ form_errors(registrationForm) }}
+      {{ form_start(registrationForm) }}
+      <div class="input-group mb-3">
+          <span class="input-group-text rounded-0" id="registration_form_email">
+            {{ ux_icon('material-symbols:alternate-email') }}
+          </span>
+        <label for="registration_form_email" hidden="hidden">Email</label>
+        <input type="email"
+               name="{{ field_name(registrationForm.email) }}"
+               id="registration_form_email"
+               class="form-control rounded-0"
+               autocomplete="email"
+               placeholder="email"
+               required autofocus
+        >
+      </div>
 
-    {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
+      <div class="input-group mb-3">
+          <span class="input-group-text rounded-0" id="registration_form_plainPassword">
+            {{ ux_icon('material-symbols:key-sharp') }}
+          </span>
+        <label for="registration_form_plainPassword" hidden="hidden">Email</label>
+        <input type="password"
+               name="{{ field_name(registrationForm.plainPassword) }}"
+               id="registration_form_plainPassword"
+               class="form-control rounded-0"
+               autocomplete="current-password"
+               placeholder="Пароль"
+               required
+        >
+      </div>
 
-        <button type="submit" class="btn">Register</button>
-    {{ form_end(registrationForm) }}
+      <label class="d-none">
+        <input type="datetime-local"
+               name="{{ field_name(registrationForm.createdAt) }}"
+               value="{{ field_value(registrationForm.createdAt) }}"
+        class="form-control d-none">
+      </label>
+
+      <div class="d-flex justify-content-between">
+        <div class="form-check mb-3">
+          <input class="form-check-input rounded-0"
+                 type="checkbox"
+                 name="{{ field_name(registrationForm.agreeTerms) }}"
+                 value="1" id="registration_form_agreeTerms" required>
+          <label class="form-check-label" for="registration_form_agreeTerms">
+            Принять
+          </label>
+        </div>
+        <a href="#" class="text-dark" target="_blank">условия</a>
+      </div>
+
+      <input type="hidden"
+             id="registration_form__token"
+             name="registration_form[_token]"
+             value="{{ csrf_token('registration_form') }}">
+
+
+      <div class="mb-5">
+        <button class="btn btn-outline-dark w-100 rounded-0" type="submit">
+          Зарегистрироваться
+        </button>
+      </div>
+      {{ form_end(registrationForm) }}
+    </div>
+  </main>
 {% endblock %}
