@@ -11,6 +11,7 @@ class StartController extends AbstractController
     #[Route('/', name: 'app_start')]
     public function index(): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_USER');
         return $this->render('start/index.html.twig', [
             'controller_name' => 'StartController',
         ]);
