@@ -37,10 +37,10 @@
               <li>
                 <hr class="dropdown-divider">
               </li>
-              <li><a href="#" class="dropdown-item">Выход</a></li>
+              <li><a href="{{ path('app_logout') }}" class="dropdown-item">Выход</a></li>
             </ul>
         {% else %}
-          <a href="#" class="btn btn-outline-dark rounded-0">Войти</a>
+          <a href="{{ path('app_login') }}" class="btn btn-outline-dark rounded-0">Войти</a>
         {% endif %}
       </div>
     </div>
