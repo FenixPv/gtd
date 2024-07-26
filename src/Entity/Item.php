@@ -46,7 +46,7 @@ class Item
     private ?string $type = null;
 
     #[ORM\Column]
-    private ?bool $is_complete = null;
+    private bool $is_complete = false;
 
     public function getId(): ?int
     {
@@ -178,7 +178,7 @@ class Item
         return $this->is_complete;
     }
 
-    public function setComplete(bool $is_complete): static
+    public function setIsComplete(bool $is_complete): static
     {
         $this->is_complete = $is_complete;
 

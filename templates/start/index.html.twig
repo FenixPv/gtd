@@ -1,20 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello StartController!{% endblock %}
+{% block title %}GTD{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+  <main class="container-fluid my-3">
+    <div class="row">
+      <div class="col-2">LEFT MENU</div>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+      <div class="col-10">
+        {{ form_start(fastItem) }}
+        <div class="row">
+          <div class="col-11">
+            <label class="w-100">
+              <input type="text"
+                     class="form-control border-0 border-bottom border-dark rounded-0"
+                     name="{{ field_name(fastItem.name) }}"
+                     autocomplete="off">
+            </label>
+            <input type="hidden" name="{{ field_name(fastItem.pid) }}" value="0">
+            <input type="hidden" name="{{ field_name(fastItem.sort) }}" value="0">
+            <input type="hidden" name="{{ field_name(fastItem.note) }}" value="">
+            <input type="hidden" name="{{ field_name(fastItem.uid) }}" value="{{ app.user.id }}">
+            <input type="hidden" name="{{ field_name(fastItem.start_date) }}" value="">
+            <input type="hidden" name="{{ field_name(fastItem.due_date) }}" value="">
+            <label class="d-none">
+              <input type="datetime-local"
+                     name="{{ field_name(fastItem.created_at) }}"
+                     value="{{ field_value(fastItem.created_at) }}">
+            </label>
+            <label class="d-none">
+              <input type="datetime-local"
+                     name="{{ field_name(fastItem.updated_at) }}"
+                     value="{{ field_value(fastItem.updated_at) }}">
+            </label>
+            <input type="hidden" name="{{ field_name(fastItem.type) }}" value="task">
+            <label class="d-none">
+              <input type="checkbox" name="{{ field_name(fastItem.is_complete) }}" >
+            </label>
+          </div>
+          <div class="col-1">
+            <button type="submit" class="btn btn-outline-dark rounded-0 w-100">Добавить</button>
+          </div>
+        </div>
+        {{ form_end(fastItem) }}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/home/pv/www/gtg/src/Controller/StartController.php</code></li>
-        <li>Your template at <code>/home/pv/www/gtg/templates/start/index.html.twig</code></li>
-    </ul>
-</div>
+        {% for item in items %}
+          <div class="">{{ item.name }} | {{ item.type }}</div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </main>
+
 {% endblock %}

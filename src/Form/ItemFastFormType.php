@@ -3,14 +3,11 @@
 namespace App\Form;
 
 use App\Entity\Item;
-use DateTimeImmutable;
-use Doctrine\DBAL\Types\BooleanType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class ItemFormType extends AbstractType
+class ItemFastFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -27,17 +24,14 @@ class ItemFormType extends AbstractType
                 'widget' => 'single_text',
             ])
             ->add('created_at', null, [
-                'format'        => DateTimeType::HTML5_FORMAT,
-                'view_timezone' => "Europe/Moscow",
-                'data'          => new DateTimeImmutable(),
+                'widget' => 'single_text',
             ])
             ->add('updated_at', null, [
-                'format'        => DateTimeType::HTML5_FORMAT,
-                'view_timezone' => "Europe/Moscow",
-                'data'          => new DateTimeImmutable(),
+                'widget' => 'single_text',
             ])
             ->add('type')
-            ->add('is_complete');
+            ->add('is_complete')
+        ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
