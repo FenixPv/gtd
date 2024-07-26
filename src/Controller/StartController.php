@@ -21,20 +21,32 @@ class StartController extends AbstractController
         ItemRepository         $itemRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
-        $fastTask = new Item();
-        $fastTaskForm = $this->createForm(ItemFastFormType::class, $fastTask);
+        $item = new Item();
+
+        $fastTaskForm = $this->createForm(ItemFastFormType::class, $item);
         $fastTaskForm->handleRequest($request);
 
         if ($fastTaskForm->isSubmitted() && $fastTaskForm->isValid()) {
-            $fastTask = $fastTaskForm->getData();
+            $item = $fastTaskForm->getData();
 
-            $entityManager->persist($fastTask);
+            $entityManager->persist($item);
             $entityManager->flush();
             return $this->redirectToRoute('app_start');
         }
+
+        $itemForm = $this->createForm(ItemFormType::class, $item);
+        $itemForm->handleRequest($request);
+
+        if ($itemForm->isSubmitted() && $itemForm->isValid()) {
+            $entityManager->persist($item);
+            $entityManager->flush();
+            return $this->redirectToRoute('app_start');
+        }
+
         return $this->render('start/index.html.twig', [
-            'fastTaskForm' => $fastTaskForm,
             'item'         => $itemRepository->findAll(),
+            'itemForm'     => $itemForm,
+            'fastTaskForm' => $fastTaskForm,
         ]);
     }
 }
