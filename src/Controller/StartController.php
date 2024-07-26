@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Item;
+use App\Form\ItemFastFormType;
 use App\Form\ItemFormType;
 use App\Repository\ItemRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -20,20 +21,20 @@ class StartController extends AbstractController
         ItemRepository         $itemRepository): Response
     {
         $this->denyAccessUnlessGranted('ROLE_USER');
-        $item = new Item();
-        $fastItem = $this->createForm(ItemFormType::class, $item);
-        $fastItem->handleRequest($request);
+        $fastTask = new Item();
+        $fastTaskForm = $this->createForm(ItemFastFormType::class, $fastTask);
+        $fastTaskForm->handleRequest($request);
 
-        if ($fastItem->isSubmitted() && $fastItem->isValid()) {
-            $item = $fastItem->getData();
+        if ($fastTaskForm->isSubmitted() && $fastTaskForm->isValid()) {
+            $fastTask = $fastTaskForm->getData();
 
-            $entityManager->persist($item);
+            $entityManager->persist($fastTask);
             $entityManager->flush();
             return $this->redirectToRoute('app_start');
         }
         return $this->render('start/index.html.twig', [
-            'fastItem' => $fastItem,
-            'items'    => $itemRepository->findAll(),
+            'fastTaskForm' => $fastTaskForm,
+            'item'         => $itemRepository->findAll(),
         ]);
     }
 }

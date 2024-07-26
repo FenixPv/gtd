@@ -8,43 +8,45 @@
       <div class="col-2">LEFT MENU</div>
 
       <div class="col-10">
-        {{ form_start(fastItem) }}
+        {{ form_start(fastTaskForm) }}
         <div class="row">
           <div class="col-11">
             <label class="w-100">
               <input type="text"
                      class="form-control border-0 border-bottom border-dark rounded-0"
-                     name="{{ field_name(fastItem.name) }}"
+                     name="{{ field_name(fastTaskForm.name) }}"
                      autocomplete="off">
             </label>
-            <input type="hidden" name="{{ field_name(fastItem.pid) }}" value="0">
-            <input type="hidden" name="{{ field_name(fastItem.sort) }}" value="0">
-            <input type="hidden" name="{{ field_name(fastItem.note) }}" value="">
-            <input type="hidden" name="{{ field_name(fastItem.uid) }}" value="{{ app.user.id }}">
-            <input type="hidden" name="{{ field_name(fastItem.start_date) }}" value="">
-            <input type="hidden" name="{{ field_name(fastItem.due_date) }}" value="">
+            <input type="hidden"
+                   name="{{ field_name(fastTaskForm.pid) }}"
+                   value="{{ field_value(fastTaskForm.pid) }}">
+
+            <input type="hidden"
+                   name="{{ field_name(fastTaskForm.sort) }}"
+                   value="{{ field_value(fastTaskForm.sort) }}">
+
+            <input type="hidden"
+                   name="{{ field_name(fastTaskForm.uid) }}"
+                   value="{{ app.user.id }}">
+
             <label class="d-none">
               <input type="datetime-local"
-                     name="{{ field_name(fastItem.created_at) }}"
-                     value="{{ field_value(fastItem.created_at) }}">
+                     name="{{ field_name(fastTaskForm.created_at) }}"
+                     value="{{ field_value(fastTaskForm.created_at) }}">
             </label>
             <label class="d-none">
               <input type="datetime-local"
-                     name="{{ field_name(fastItem.updated_at) }}"
-                     value="{{ field_value(fastItem.updated_at) }}">
-            </label>
-            <input type="hidden" name="{{ field_name(fastItem.type) }}" value="task">
-            <label class="d-none">
-              <input type="checkbox" name="{{ field_name(fastItem.is_complete) }}" >
+                     name="{{ field_name(fastTaskForm.updated_at) }}"
+                     value="{{ field_value(fastTaskForm.updated_at) }}">
             </label>
           </div>
           <div class="col-1">
             <button type="submit" class="btn btn-outline-dark rounded-0 w-100">Добавить</button>
           </div>
         </div>
-        {{ form_end(fastItem) }}
+        {{ form_end(fastTaskForm) }}
 
-        {% for item in items %}
+        {% for item in item %}
           <div class="">{{ item.name }} | {{ item.type }}</div>
         {% endfor %}
       </div>
